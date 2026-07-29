@@ -48,9 +48,14 @@ app.get('/jobs', async (req, res) => {
     try {
         const result = await jobsCollection.find().toArray();
         res.send(result);
-    } catch (error) {
-        res.status(500).send({ message: "Internal Server Error" });
-    }
+  } catch (error) {
+    console.error("Jobs Error:", error);
+
+    res.status(500).json({
+        message: error.message,
+        name: error.name
+    });
+}
 });
 
 // Get single job by ID
